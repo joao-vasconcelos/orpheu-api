@@ -5,10 +5,8 @@ const mongoose = require("mongoose");
 
 /* * */
 /* * */
-/* * */
 /* * * * * */
 /* MONGO DB MODEL */
-/* * */
 /* * */
 /* Schema for MongoDB ["Author"] Object */
 /* This Schema must match Joi */
@@ -25,10 +23,8 @@ const Author = mongoose.model(
 
 /* * */
 /* * */
-/* * */
 /* * * * * */
 /* JOI VALIDATION SCHEMA */
-/* * */
 /* * */
 /* Schema for Joi ["Author"] Object validation */
 /* This Schema must match MongoDB */

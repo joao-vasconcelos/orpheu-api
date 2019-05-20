@@ -1,4 +1,3 @@
-const debug = require("debug")("app:encrypt-api");
 const bcrypt = require("bcrypt");
 
 /* * */
@@ -8,23 +7,14 @@ const salt_rounds = 10;
 /* * */
 /* Method to encrypt password */
 async function encryptPassword(password) {
-  try {
-    const salt = await bcrypt.genSalt(salt_rounds);
-    return await bcrypt.hash(password, salt);
-  } catch (err) {
-    debug("An error occured: ", err);
-  }
+  const salt = await bcrypt.genSalt(salt_rounds);
+  return await bcrypt.hash(password, salt);
 }
 
 /* * */
 /* Method to validate password at login */
 async function validatePassword(password, against) {
-  try {
-    return await bcrypt.compare(password, against);
-  } catch (err) {
-    debug("An error occured: ", err);
-    return false;
-  }
+  return await bcrypt.compare(password, against);
 }
 
 exports.encryptPassword = encryptPassword;

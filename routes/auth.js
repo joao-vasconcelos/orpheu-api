@@ -1,8 +1,7 @@
 /* * */
 /* IMPORTS */
-const debug = require("debug")("app:users-api");
 const Joi = require("joi");
-const { validatePassword, getToken } = require("../services/hash");
+const { validatePassword, getToken } = require("../services/encrypt");
 const { User } = require("../models/user");
 const router = require("express").Router();
 
