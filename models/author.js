@@ -10,18 +10,14 @@ const mongoose = require("mongoose");
 /* MONGO DB MODEL */
 /* * */
 /* * */
-/* Schema for MongoDB ["Book"] Object */
+/* Schema for MongoDB ["Author"] Object */
 /* This Schema must match Joi */
-const Book = mongoose.model(
-  "Book",
+const Author = mongoose.model(
+  "Author",
   new mongoose.Schema({
-    title: {
+    name: {
       type: String,
       minlength: 2,
-      required: true
-    },
-    authors: {
-      type: String,
       required: true
     }
   })
@@ -34,7 +30,7 @@ const Book = mongoose.model(
 /* JOI VALIDATION SCHEMA */
 /* * */
 /* * */
-/* Schema for Joi ["Book"] Object validation */
+/* Schema for Joi ["Author"] Object validation */
 /* This Schema must match MongoDB */
 const validation_schema = {
   name: Joi.string()
@@ -50,5 +46,5 @@ function validate(request) {
 
 /* * */
 /* Export functions for User model and validate function */
-exports.Book = Book;
+exports.Author = Author;
 exports.validate = validate;
