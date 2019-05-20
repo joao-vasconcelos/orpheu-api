@@ -1,39 +1,10 @@
 /* * */
 /* IMPORTS */
+const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 const debug = require("debug")("app:books-api");
-const Joi = require("joi");
-const mongoose = require("mongoose");
+const { Book, validate } = require("../models/book");
 const router = require("express").Router();
-
-/* * */
-/* SCHEMAS */
-/* * */
-/* * */
-/* 1 */
-/* Schema for MongoDB ["Book"] Object */
-/* This Schema must match Joi */
-const Book = mongoose.model(
-  "Book",
-  new mongoose.Schema({
-    name: {
-      type: String,
-      minlength: 5,
-      required: true
-    }
-  })
-);
-
-/* * */
-/* 2 */
-/* Schema for Joi ["Book"] Object validation */
-/* This Schema must match MongoDB */
-const validation_schema = {
-  name: Joi.string()
-    .min(5)
-    .required()
-};
-/* * * * * * */
-/* * */
 
 /* * */
 /* GET method for [/api/books/] */
@@ -62,9 +33,9 @@ router.get("/:id", async (req, res) => {
 /* POST method for [/api/books/] */
 /* Creates a new item in the database. */
 /* Responds with the newly created item */
-router.post("/", async (req, res) => {
+router.post("/", [auth, admin], async (req, res) => {
   // Validate the request
-  const { error } = Joi.validate(req.body, validation_schema);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   // Try saving to the database
@@ -84,9 +55,9 @@ router.post("/", async (req, res) => {
 /* PUT method for [/api/books/:id] */
 /* Updates an existing item in the database. */
 /* Responds with the updated item */
-router.put("/:id", async (req, res) => {
+router.put("/:id", [auth, admin], async (req, res) => {
   // Validate the request
-  const { error } = Joi.validate(req.body, validation_schema);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   // Try saving to the database
@@ -109,7 +80,7 @@ router.put("/:id", async (req, res) => {
 /* DELETE method for [/api/books/:id] */
 /* Deletes an existing item from the database. */
 /* Responds with the deleted item */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", [auth, admin], async (req, res) => {
   try {
     const item = await Book.findByIdAndRemove(req.params.id);
     res.send(item);

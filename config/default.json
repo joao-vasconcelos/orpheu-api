@@ -1,3 +1,6 @@
 {
-  "name": "Orpheu API"
+  "name": "Orpheu API",
+  "auth": {
+    "jwtPrivateKey": ""
+  }
 }
