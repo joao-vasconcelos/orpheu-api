@@ -1,4 +1,4 @@
-const debug = require("debug")("app:hash-api");
+const debug = require("debug")("app:encrypt-api");
 const bcrypt = require("bcrypt");
 
 /* * */
