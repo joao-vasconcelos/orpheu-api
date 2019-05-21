@@ -33,7 +33,7 @@ const Book = mongoose.model(
 /* Schema for Joi ["Book"] Object validation */
 /* This Schema must match MongoDB */
 const validation_schema = {
-  name: Joi.string()
+  title: Joi.string()
     .min(2)
     .required()
 };

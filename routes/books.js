@@ -31,7 +31,7 @@ router.post("/", [auth, admin], async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   // Try saving to the database
-  let item = new Book({ name: req.body.name });
+  let item = new Book({ title: req.body.title });
   item = await item.save();
   res.send(item);
 });
