@@ -10,8 +10,7 @@ require("./startup/routes")(app);
 require("./startup/database")();
 require("./startup/config")();
 require("./startup/validation")();
-
-app.use(helmet());
+require("./startup/production")(app);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => winston.info(`Listening on port ${port}...`));

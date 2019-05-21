@@ -1,0 +1,9 @@
+{
+  "title": "Orpheu API - Tests",
+  "database": {
+    "url": "mongodb://localhost/orpheu_tests"
+  },
+  "auth": {
+    "jwtPrivateKey": "1234"
+  }
+}

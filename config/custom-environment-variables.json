@@ -1,5 +1,8 @@
 {
+  "database": {
+    "url": "database_url"
+  },
   "auth": {
-    "jwtPrivateKey": "orpheu_jwtPrivateKey"
+    "jwtPrivateKey": "jwtPrivateKey"
   }
 }

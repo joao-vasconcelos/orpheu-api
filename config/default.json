@@ -1,6 +1,9 @@
 {
-  "name": "Orpheu API",
+  "title": "Orpheu API",
+  "database": {
+    "url": "mongodb://localhost/orpheu"
+  },
   "auth": {
-    "jwtPrivateKey": ""
+    "jwtPrivateKey": "1234"
   }
 }
