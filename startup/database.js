@@ -13,5 +13,5 @@ module.exports = function() {
   mongoose
     .set("useCreateIndex", true) // Temporary fix for deprecation warning.
     .connect(dbURL, { useNewUrlParser: true })
-    .then(() => winston.info(`Connected to MongoDB at ${dbURL}`));
+    .then(() => winston.info("Connected to MongoDB..."));
 };
