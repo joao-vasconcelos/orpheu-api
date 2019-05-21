@@ -9,7 +9,6 @@ const router = require("express").Router();
 /* GET method for [/api/books/] */
 /* Responds with all items from the database */
 router.get("/", async (req, res) => {
-  throw new Error("Error");
   const items = await Book.find().sort("name");
   res.send(items);
 });

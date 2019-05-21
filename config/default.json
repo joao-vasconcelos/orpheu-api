@@ -1,7 +1,7 @@
 {
   "title": "Orpheu API",
   "database": {
-    "url": "mongodb://localhost/orpheu"
+    "url": "mongodb+srv://orpheu_database:efervescente@orpheu-bmek6.mongodb.net/test?retryWrites=true"
   },
   "auth": {
     "jwtPrivateKey": "1234"
