@@ -19,10 +19,6 @@ const Book = mongoose.model(
       type: String,
       minlength: 2,
       required: true
-    },
-    authors: {
-      type: String,
-      required: true
     }
   })
 );
