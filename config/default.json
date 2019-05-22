@@ -4,6 +4,7 @@
     "url": "mongodb://localhost/orpheu"
   },
   "auth": {
+    "requiresAuth": false,
     "jwtPrivateKey": "1234"
   }
 }
