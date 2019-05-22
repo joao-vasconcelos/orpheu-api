@@ -5,6 +5,7 @@
   },
   "auth": {
     "requiresAuth": false,
+    "requiresAdmin": false,
     "jwtPrivateKey": "1234"
   }
 }
