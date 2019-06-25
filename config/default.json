@@ -1,5 +1,9 @@
 {
   "title": "Orpheu API",
+  "connection": {
+    "port": 3500,
+    "allowCrossDomain": true
+  },
   "database": {
     "url": "mongodb://localhost/orpheu"
   },

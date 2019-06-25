@@ -15,7 +15,6 @@ const router = require("express").Router();
 /* because only "email" and "password" are tested against authentication */
 const validation_schema = {
   email: Joi.string()
-    .min(3)
     .max(255)
     .email()
     .required(),
@@ -42,7 +41,10 @@ router.post("/", async (req, res) => {
   let validPassword = await validatePassword(req.body.password, user.password);
   if (!validPassword) return res.status(400).send("Invalid password.");
 
-  res.header("x-auth-token", user.generateAuthToken()).send("Login succesfull");
+  res
+    .header("x-auth-token", user.generateAuthToken())
+    .header("access-control-expose-headers", "x-auth-token")
+    .send("Login succesfull");
 });
 
 module.exports = router;

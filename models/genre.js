@@ -15,9 +15,16 @@ const mongoose = require("mongoose");
 const Genre = mongoose.model(
   "Genre",
   new mongoose.Schema({
-    name: {
+    coverURL: {
       type: String,
-      minlength: 3,
+      minlength: 2,
+      maxlength: 255,
+      default: "https://picsum.photos/100/100"
+    },
+    title: {
+      type: String,
+      minlength: 2,
+      maxlength: 15,
       required: true
     }
   })
@@ -34,7 +41,8 @@ const Genre = mongoose.model(
 /* This Schema must match MongoDB */
 const validation_schema = {
   name: Joi.string()
-    .min(3)
+    .min(2)
+    .max(25)
     .required()
 };
 
