@@ -11,5 +11,10 @@
     "requiresAuth": false,
     "requiresAdmin": false,
     "jwtPrivateKey": "1234"
+  },
+  "storage": {
+    "endpoint": "fra1.digitaloceanspaces.com",
+    "key": "YAFLRQQHM4AN6UMNUPU7",
+    "secret": "qXPc2FdNZdIH7ppfXU+34VYU87LxpvCjkD7kmipoHe0"
   }
 }

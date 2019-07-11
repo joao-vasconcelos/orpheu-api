@@ -9,8 +9,12 @@ const router = require("express").Router();
 /* GET method for [/api/books/] */
 /* Responds with all items from the database */
 router.get("/", async (req, res) => {
-  const items = await Book.find().sort("name");
-  res.send(items);
+  try {
+    const items = await Book.find().sort("name");
+    res.send(items);
+  } catch (err) {
+    return res.status(404).send("No books found.");
+  }
 });
 
 /* * */
@@ -22,6 +26,20 @@ router.get("/:id", async (req, res) => {
     res.send(item);
   } catch (err) {
     return res.status(404).send("The book with the given ID was not found.");
+  }
+});
+
+/* * */
+/* GET method for [/api/books/filter/:path] */
+/* Responds with specific items from the database */
+router.get("/filter/:key/:value", async (req, res) => {
+  try {
+    const items = await Book.find({ [req.params.key]: req.params.value });
+    res.send(items);
+  } catch (err) {
+    return res
+      .status(404)
+      .send("The books with the given filter were not found.");
   }
 });
 

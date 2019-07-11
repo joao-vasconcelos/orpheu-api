@@ -28,7 +28,6 @@ const Author = mongoose.model(
   new mongoose.Schema({
     coverURL: {
       type: String,
-      minlength: 2,
       maxlength: 255,
       default: "https://picsum.photos/100/100"
     },
@@ -68,7 +67,10 @@ const Author = mongoose.model(
 /* Schema for Joi ["Author"] Object validation */
 /* This Schema must match MongoDB */
 const validation_schema = {
-  _id: Joi.string().max(24),
+  coverURL: Joi.string()
+    .max(255)
+    .allow("")
+    .label("CoverURL"),
   name: Joi.string()
     .min(2)
     .max(50)

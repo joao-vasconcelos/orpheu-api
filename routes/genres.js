@@ -1,9 +1,12 @@
 /* * */
 /* IMPORTS */
+const router = require("express").Router();
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
+const storage = require("../services/storage");
 const { Genre, validate } = require("../models/genre");
-const router = require("express").Router();
+
+// const { upload } = require("../services/fileManager");
 
 /* * */
 /* GET method for [/api/genres/] */
@@ -27,9 +30,11 @@ router.get("/:id", async (req, res) => {
 
 /* * */
 /* POST method for [/api/genres/] */
+/* Validates the request. */
+/* Stores the image in storage. */
 /* Creates a new item in the database. */
 /* Responds with the newly created item */
-router.post("/", [auth, admin], async (req, res) => {
+router.post("/", [(auth, admin)], async (req, res) => {
   // Validate the request
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -39,6 +44,11 @@ router.post("/", [auth, admin], async (req, res) => {
   if (items.length) {
     return res.status(400).send("A genre with that title already exists.");
   }
+
+  // Upload coverImage file to S3
+  // and get URL to store in the database
+  const URL = await storage.uploadFile(req.files.coverImage, req.body.title);
+  req.body.coverURL = URL;
 
   // Try saving to the database
   item = new Genre(req.body);
@@ -56,7 +66,7 @@ router.put("/:id", [auth, admin], async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   // Try saving to the database
-  const item = await Book.findByIdAndUpdate(
+  const item = await Genre.findByIdAndUpdate(
     req.params.id /* Which item to update */,
     req.body /* What is to change */,
     { new: true } /* Respond with the updated document */

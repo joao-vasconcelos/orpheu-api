@@ -17,7 +17,6 @@ const Genre = mongoose.model(
   new mongoose.Schema({
     coverURL: {
       type: String,
-      minlength: 2,
       maxlength: 255,
       default: "https://picsum.photos/100/100"
     },
@@ -26,6 +25,10 @@ const Genre = mongoose.model(
       minlength: 2,
       maxlength: 15,
       required: true
+    },
+    description: {
+      type: String,
+      maxlength: 1500
     }
   })
 );
@@ -40,10 +43,20 @@ const Genre = mongoose.model(
 /* Schema for Joi ["Book"] Object validation */
 /* This Schema must match MongoDB */
 const validation_schema = {
-  name: Joi.string()
+  coverImage: Joi.any(),
+  coverURL: Joi.string()
+    .max(255)
+    .allow("")
+    .label("CoverURL"),
+  title: Joi.string()
     .min(2)
-    .max(25)
+    .max(15)
     .required()
+    .label("Title"),
+  description: Joi.string()
+    .max(1500)
+    .allow("")
+    .label("Description")
 };
 
 function validate(request) {
