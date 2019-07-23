@@ -43,7 +43,9 @@ const Genre = mongoose.model(
 /* Schema for Joi ["Book"] Object validation */
 /* This Schema must match MongoDB */
 const validation_schema = {
-  coverImage: Joi.any(),
+  coverImage: Joi.any()
+    .disallow(null)
+    .label("Cover Image"),
   coverURL: Joi.string()
     .max(255)
     .allow("")
