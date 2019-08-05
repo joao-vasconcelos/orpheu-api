@@ -102,7 +102,7 @@ router.put("/:id", [auth, admin], async (req, res) => {
 
   // Upload picture file to S3
   // and get pictureURL to store in the database
-  if (req.files.length) {
+  if (req.files.picture) {
     const fileKey = storage.createFileNameAndKey(
       contentPath,
       req.params.id,

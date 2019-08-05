@@ -100,7 +100,7 @@ router.put("/:id", [auth, admin], async (req, res) => {
 
   // Upload coverImage file to S3
   // and get URL to store in the database
-  if (req.files.length) {
+  if (req.files.picture) {
     const fileKey = storage.createFileNameAndKey(
       contentPath,
       req.params.id,
