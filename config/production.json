@@ -1,5 +1,5 @@
 {
-  "title": "Orpheu API - Dev",
+  "title": "Orpheu API",
   "connection": {
     "port": 3500,
     "allow-cross-domain": true

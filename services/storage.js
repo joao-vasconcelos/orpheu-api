@@ -11,14 +11,15 @@ const aws = require("aws-sdk");
 
 /* * */
 /* NOMENCLATURE */
-/* * */
+/* */
 /*
 /* fileTitle => refers to only the given title for the file (foo).
-/*   fileExt => refers to mimetype extension of the file (jpeg).
-/*  fileName => refers to complete file name (foo.jpeg).
-/*   fileKey => refers to the file path from bucket root (folder/foo.jpeg).
-/*   fileURL => refers to the full URL where file is available on the web.
+/* fileExt   => refers to mimetype extension of the file (jpeg).
+/* fileName  => refers to complete file name (foo.jpeg).
+/* fileKey   => refers to the file path from bucket root (folder/foo.jpeg).
+/* fileURL   => refers to the full URL where fi le is available on the web.
 /*
+/* */
 /* * */
 
 /* * */
@@ -34,6 +35,9 @@ const S3 = new aws.S3({
 /* Upload method for files. */
 /* Uploads one file at a time and returns its location URL */
 async function uploadFile(key, file, acl) {
+  // If storage is not enabled, skip operation
+  if (!config.get("storage.enabled")) return "no-href";
+
   const params = {
     Bucket: config.get("storage.bucket"),
     Key: key,
@@ -46,6 +50,7 @@ async function uploadFile(key, file, acl) {
     .promise()
     .then(uploadedFile => {
       fileURL = uploadedFile.Location;
+      console.log("New file available at ", fileURL);
     })
     .catch(err => {
       console.log(err);
@@ -78,6 +83,9 @@ async function changeFileName(oldKey, newKey) {
 /* Delete method for files. */
 /* Deletes one file at a time and returns true or false */
 async function deleteFile(key) {
+  // If storage is not enabled, skip operation
+  if (!config.get("storage.enabled")) return true;
+
   const params = {
     Bucket: config.get("storage.bucket"),
     Key: key
@@ -113,7 +121,7 @@ function createFileName(fileTitle, mimetype) {
 /* Helper method to create complete key for file. */
 /* Adds the root folder, content type path, name and the extension */
 function createFileKey(path, fileName) {
-  return config.get("storage.contentFolder") + "/" + path + "/" + fileName;
+  return config.get("storage.content-folder") + "/" + path + "/" + fileName;
 }
 
 /* * */

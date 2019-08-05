@@ -1,3 +1,6 @@
+# config files
+config/default.json
+
 # Logs
 logs
 *.log
@@ -44,6 +47,7 @@ typings/
 
 # Optional eslint cache
 .eslintcache
+
 
 # Optional REPL history
 .node_repl_history

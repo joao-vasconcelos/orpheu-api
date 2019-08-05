@@ -10,26 +10,43 @@ const mongoose = require("mongoose");
 /* MONGO DB MODEL */
 /* * */
 /* * */
-/* Schema for MongoDB ["Genre"] Object */
+/* Schema for MongoDB ["Seller"] Object */
 /* This Schema must match Joi */
-const Genre = mongoose.model(
-  "Genre",
+const Store = mongoose.model(
+  "Store",
   new mongoose.Schema({
     pictureURL: {
       type: String,
       maxlength: 255,
       default: "https://picsum.photos/100/100"
     },
-    title: {
+    name: {
       type: String,
       minlength: 2,
       maxlength: 15,
       required: true
     },
-    description: {
+    address: {
       type: String,
       maxlength: 1500
-    }
+    },
+    about: {
+      type: String,
+      maxlength: 1500
+    },
+    workingHours: [
+      {
+        weekday: { type: String, maxlength: 1500 },
+        hours: {}
+      }
+    ],
+    reviews: [
+      {
+        userID: { type: String, maxlength: 1500 },
+        title: { type: String, maxlength: 1500 },
+        content: { type: String, maxlength: 1500 }
+      }
+    ]
   })
 );
 
@@ -40,13 +57,13 @@ const Genre = mongoose.model(
 /* JOI VALIDATION SCHEMA */
 /* * */
 /* * */
-/* Schema for Joi ["Book"] Object validation */
+/* Schema for Joi ["Store"] Object validation */
 /* This Schema must match MongoDB */
 const validation_schema = {
-  coverImage: Joi.any()
+  storeImage: Joi.any()
     .disallow(null)
-    .label("Cover Image"),
-  coverURL: Joi.string()
+    .label("Profile Picture"),
+  storeImageURL: Joi.string()
     .max(255)
     .allow("")
     .label("CoverURL"),
@@ -69,5 +86,5 @@ function validate(request) {
 
 /* * */
 /* Export functions for User model and validate function */
-exports.Genre = Genre;
+exports.Store = Store;
 exports.validate = validate;

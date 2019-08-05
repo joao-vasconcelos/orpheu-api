@@ -3,7 +3,7 @@ const config = require("config");
 
 module.exports = function(req, res, next) {
   // Switch authentication ON or OFF based on config file
-  if (config.get("auth.requiresAuth")) {
+  if (config.get("auth.require-auth")) {
     // Token is sent in the request header named x-auth-token
     const token = req.header("x-auth-token");
 
@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
 
     // If token was provided check if it is valid
     try {
-      req.user = jwt.verify(token, config.get("auth.jwtPrivateKey"));
+      req.user = jwt.verify(token, config.get("auth.jwt-private-key"));
       next();
     } catch (err) {
       res.status(400).send("Invalid token.");

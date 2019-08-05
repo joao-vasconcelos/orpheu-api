@@ -26,7 +26,7 @@ const mongoose = require("mongoose");
 const Author = mongoose.model(
   "Author",
   new mongoose.Schema({
-    coverURL: {
+    pictureURL: {
       type: String,
       maxlength: 255,
       default: "https://picsum.photos/100/100"
@@ -67,6 +67,9 @@ const Author = mongoose.model(
 /* Schema for Joi ["Author"] Object validation */
 /* This Schema must match MongoDB */
 const validation_schema = {
+  coverImage: Joi.any()
+    .disallow(null)
+    .label("Cover Image"),
   coverURL: Joi.string()
     .max(255)
     .allow("")

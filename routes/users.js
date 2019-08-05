@@ -34,8 +34,10 @@ router.post("/", async (req, res) => {
     password: await encryptPassword(req.body.password),
     isAdmin: req.body.isAdmin
   });
+
   user = await user.save();
-  res
+
+  res // Send response
     .header("x-auth-token", user.generateAuthToken())
     .header("access-control-expose-headers", "x-auth-token")
     .send(_.pick(user, ["_id", "name", "email", "isAdmin"]));

@@ -29,9 +29,8 @@ Joi.objectId = require("joi-objectid")(Joi);
 const Book = mongoose.model(
   "Book",
   new mongoose.Schema({
-    coverURL: {
+    pictureURL: {
       type: String,
-      minlength: 2,
       maxlength: 255,
       default: "https://picsum.photos/100/100"
     },
@@ -44,30 +43,34 @@ const Book = mongoose.model(
     authors: [
       {
         _id: { type: mongoose.Schema.Types.ObjectId, ref: "Author" },
-        name: { type: String, minlength: 2 }
+        name: { type: String, minlength: 2, maxlength: 255 }
       }
     ],
     genres: [
       {
         _id: { type: mongoose.Schema.Types.ObjectId, ref: "Genre" },
-        title: { type: String, minlength: 2 }
+        title: { type: String, minlength: 2, maxlength: 255 }
       }
     ],
-    language: { type: String, minlength: 2 },
-    publisher: { type: String, minlength: 2 },
-    edition: { type: String, minlength: 2 },
-    year: { type: String, minlength: 2 },
-    coverType: { type: String, minlength: 2 },
-    pages: { type: String, minlength: 2 },
-    dimensions: { type: String, minlength: 2 },
-    condition: { type: String, minlength: 2 },
-    sinopse: { type: String, minlength: 2 },
-    price: { type: String, minlength: 2 },
-    seller: {
-      _id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-      name: { type: String, minlength: 2 }
+    language: { type: String, minlength: 2, maxlength: 255 },
+    publisher: { type: String, minlength: 2, maxlength: 255 },
+    edition: { type: String, minlength: 2, maxlength: 255 },
+    year: { type: String, minlength: 2, maxlength: 255 },
+    coverType: { type: String, minlength: 2, maxlength: 255 },
+    pages: { type: String, minlength: 2, maxlength: 255 },
+    dimensions: { type: String, minlength: 2, maxlength: 255 },
+    condition: { type: String, minlength: 2, maxlength: 255 },
+    sinopse: { type: String, minlength: 2, maxlength: 255 },
+    price: { type: String, minlength: 2, maxlength: 255 },
+    store: {
+      // _id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      _id: { type: String, required: true, default: "pending" },
+      name: { type: String, minlength: 2, maxlength: 255 }
     },
-    available: { type: Boolean, required: true, default: true }
+    status: {
+      code: { type: Number, required: true, default: 0 },
+      message: { type: String, required: true, default: "pending" }
+    }
   })
 );
 /* * * * * * */
@@ -95,26 +98,32 @@ const validation_schema = {
       })
     )
     .required(),
-  genres: Joi.array().items(
-    Joi.object({
-      _id: Joi.string().required(),
-      title: Joi.string().required()
-    })
-  ),
-  language: Joi.string(),
-  publisher: Joi.string(),
-  edition: Joi.string(),
+  genres: Joi.array()
+    .min(1)
+    .items(
+      Joi.object({
+        _id: Joi.string().required(),
+        title: Joi.string().required()
+      })
+    ),
+  language: Joi.string().allow(""),
+  publisher: Joi.string().allow(""),
+  edition: Joi.string().allow(""),
   year: Joi.number(),
-  coverType: Joi.string(),
-  pages: Joi.number(),
-  dimensions: Joi.string(),
-  condition: Joi.string(),
-  sinopse: Joi.string(),
+  coverType: Joi.string().allow(""),
+  pages: Joi.number().allow(""),
+  dimensions: Joi.string().allow(""),
+  condition: Joi.string().allow(""),
+  sinopse: Joi.string().allow(""),
   price: Joi.number(),
-  seller: Joi.object({
+  store: Joi.object({
     _id: Joi.string().required(),
-    title: Joi.string().required()
-  })
+    name: Joi.string().required()
+  }),
+  status: Joi.object({
+    code: Joi.number().label("Status Code"),
+    message: Joi.string().label("Status Message")
+  }).label("Status")
 };
 
 function validate(request) {

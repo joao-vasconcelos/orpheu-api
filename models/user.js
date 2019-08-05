@@ -15,6 +15,11 @@ const mongoose = require("mongoose");
 /* Schema for MongoDB ["User"] Object */
 /* This Schema must match Joi */
 const user_schema = new mongoose.Schema({
+  pictureURL: {
+    type: String,
+    maxlength: 255,
+    default: "https://picsum.photos/100/100"
+  },
   name: {
     type: String,
     maxlength: 50,
@@ -42,15 +47,15 @@ const user_schema = new mongoose.Schema({
 /* Method to get token after valid password */
 user_schema.methods.generateAuthToken = function() {
   return jwt.sign(
-    // Here are defined the params to include in the "payload" of the JWT Token
+    // Here are defined the params to include
+    // in the "payload" of the JWT Token
     {
       _id: this._id,
       name: this.name,
-      email: this.email,
-      isAdmin: this.isAdmin
+      email: this.email
     },
     // Get the private key from environment variables
-    config.get("auth.jwtPrivateKey")
+    config.get("auth.jwt-private-key")
   );
 };
 

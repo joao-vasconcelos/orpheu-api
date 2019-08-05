@@ -1,12 +1,12 @@
 {
   "database": {
-    "url": "database_url"
+    "url": "database-url"
   },
   "auth": {
-    "jwtPrivateKey": "jwtPrivateKey"
+    "jwt-private-key": "jwt-private-key"
   },
   "storage": {
-    "key": "storageKey",
-    "secret": "storageSecret"
+    "key": "storage-key",
+    "secret": "storage-secret"
   }
 }

@@ -6,9 +6,21 @@ const admin = require("../middleware/admin");
 const storage = require("../services/storage");
 const { Genre, validate } = require("../models/genre");
 
+/* * */
+/* SETTINGS */
 const contentPath = "genres";
 
 /* * */
+/* * */
+/* * */
+/* * * * * */
+/* ROUTES FOR 'GENRES' */
+/* * */
+/* * */
+
+/* * */
+/* * */
+/* * * * * */
 /* GET method for [/api/genres/] */
 /* Responds with all items from the database */
 router.get("/", async (req, res) => {
@@ -17,6 +29,8 @@ router.get("/", async (req, res) => {
 });
 
 /* * */
+/* * */
+/* * * * * */
 /* GET method for [/api/genres/:id] */
 /* Responds with a specific item from the database */
 router.get("/:id", async (req, res) => {
@@ -26,6 +40,8 @@ router.get("/:id", async (req, res) => {
 });
 
 /* * */
+/* * */
+/* * * * * */
 /* POST method for [/api/genres/] */
 /* Validates the request. */
 /* Stores the image in storage. */
@@ -42,26 +58,28 @@ router.post("/", [(auth, admin)], async (req, res) => {
     return res.status(400).send("A genre with that title already exists.");
   }
 
-  // Upload coverImage file to S3
-  // and get URL to store in the database
+  // Upload picture file to S3
+  // and get pictureURL to store in the database
   const fileKey = storage.createFileNameAndKey(
     contentPath,
     req.body.title,
-    req.files.coverImage.mimetype
+    req.files.picture.mimetype
   );
 
-  req.body.coverURL = await storage.uploadFile(
+  req.body.pictureURL = await storage.uploadFile(
     fileKey,
-    req.files.coverImage.data
+    req.files.picture.data
   );
 
   // Try saving to the database
-  item = new Genre(req.body);
+  let item = new Genre(req.body);
   item = await item.save();
   res.send(item);
 });
 
 /* * */
+/* * */
+/* * * * * */
 /* PUT method for [/api/genres/:id] */
 /* Updates an existing item in the database. */
 /* Responds with the updated item */
@@ -70,34 +88,18 @@ router.put("/:id", [auth, admin], async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  // Get the current item from db to compare
-  const oldItem = await Genre.findById(req.params.id);
-
-  // Check if title has changed
-  // If yes, update fileTitle
-  if (oldItem.title !== req.body.title) {
-    const oldKey = storage.extractKeyFromURL(oldItem.coverURL);
-    const newKey = storage.createFileNameAndKey(
-      contentPath,
-      req.body.title,
-      oldItem.coverURL.split(".").pop()
-    );
-
-    req.body.coverURL = await storage.changeFileName(oldKey, newKey);
-  }
-
-  // Upload coverImage file to S3
-  // and get URL to store in the database
-  if (req.files) {
+  // Upload picture file to S3
+  // and get pictureURL to store in the database
+  if (req.files.length) {
     const fileKey = storage.createFileNameAndKey(
       contentPath,
-      req.body.title,
-      req.files.coverImage.mimetype
+      req.params.id,
+      req.files.picture.mimetype
     );
 
-    req.body.coverURL = await storage.uploadFile(
+    req.body.pictureURL = await storage.uploadFile(
       fileKey,
-      req.files.coverImage.data
+      req.files.picture.data
     );
   }
 
@@ -112,6 +114,8 @@ router.put("/:id", [auth, admin], async (req, res) => {
 });
 
 /* * */
+/* * */
+/* * * * * */
 /* DELETE method for [/api/genres/:id] */
 /* Deletes an existing item from the database. */
 /* Responds with the deleted item */
@@ -119,7 +123,7 @@ router.delete("/:id", [auth, admin], async (req, res) => {
   const item = await Genre.findByIdAndRemove(req.params.id);
 
   // Delete file in Storage
-  const fileKey = storage.extractKeyFromURL(item.coverURL);
+  const fileKey = storage.extractKeyFromURL(item.pictureURL);
   const fileHasBeenDeleted = await storage.deleteFile(fileKey);
   if (!fileHasBeenDeleted)
     return res.status(500).send("Error deleting the file.");
@@ -128,5 +132,5 @@ router.delete("/:id", [auth, admin], async (req, res) => {
 });
 
 /* * */
-/* Export router for [/api/books/] */
+/* Export router for [/api/genres/] */
 module.exports = router;
