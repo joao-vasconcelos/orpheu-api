@@ -12,10 +12,10 @@ const auth_router = require("../routes/auth");
 const error = require("../middleware/error");
 
 module.exports = function(app) {
-  app.use("/api/books", books_router);
-  app.use("/api/authors", authors_router);
-  app.use("/api/genres", genres_router);
-  app.use("/api/users", users_router);
-  app.use("/api/auth", auth_router);
+  app.use("/books", books_router);
+  app.use("/authors", authors_router);
+  app.use("/genres", genres_router);
+  app.use("/users", users_router);
+  app.use("/auth", auth_router);
   app.use(error);
 };
