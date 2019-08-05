@@ -126,7 +126,7 @@ const validation_schema = {
   edition: Joi.string()
     .max(255)
     .allow(""),
-  year: Joi.number().max(255),
+  year: Joi.number().max(9999),
   coverType: Joi.string()
     .max(255)
     .allow(""),
