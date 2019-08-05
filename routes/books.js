@@ -56,16 +56,22 @@ router.get("/filter/:key/:value", async (req, res) => {
 /* Creates a new item in the database. */
 /* Responds with the newly created item */
 router.post("/", [auth, admin], async (req, res) => {
+  /* Validation */
   // Validate the request
+  // Continue if no errors are found
   const { error } = validate(req.body);
-  console.log("error:", error);
   if (error) return res.status(400).send(error.details[0].message);
 
+  // Instantiate a new model of Book
+  // So it's properties become available
+  let item = new Book();
+
+  /* Storage Handling */
   // Upload picture file to S3
   // and get pictureURL to store in the database
   const fileKey = storage.createFileNameAndKey(
     contentPath,
-    req.body.title,
+    item._id,
     req.files.picture.mimetype
   );
 
@@ -74,9 +80,12 @@ router.post("/", [auth, admin], async (req, res) => {
     req.files.picture.data
   );
 
-  // Try saving to the database
-  let item = new Book(req.body);
+  // Set model properties to req.body
+  // And try saving to the database
+  item.set(req.body);
   item = await item.save();
+
+  // Send the created item back to the client
   res.send(item);
 });
 
