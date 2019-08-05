@@ -5,7 +5,7 @@
     "allow-cross-domain": true
   },
   "database": {
-    "url": "env-var"
+    "connectionString": "env-var"
   },
   "auth": {
     "require-auth": false,
@@ -13,7 +13,7 @@
     "jwt-private-key": "env-var"
   },
   "storage": {
-    "enabled": false,
+    "enabled": true,
     "endpoint": "fra1.digitaloceanspaces.com",
     "key": "env-var",
     "secret": "env-var",
