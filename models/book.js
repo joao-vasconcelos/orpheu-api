@@ -31,8 +31,7 @@ const Book = mongoose.model(
   new mongoose.Schema({
     pictureURL: {
       type: String,
-      maxlength: 255,
-      default: "https://picsum.photos/100/100"
+      maxlength: 255
     },
     title: {
       type: String,
@@ -55,12 +54,12 @@ const Book = mongoose.model(
     language: { type: String, minlength: 2, maxlength: 255 },
     publisher: { type: String, minlength: 2, maxlength: 255 },
     edition: { type: String, minlength: 2, maxlength: 255 },
-    year: { type: String, minlength: 2, maxlength: 255 },
-    coverType: { type: String, minlength: 2, maxlength: 255 },
+    year: { type: Number, minlength: 2, maxlength: 4 },
+    coverType: { type: String, minlength: 2, maxlength: 50 },
     pages: { type: String, minlength: 2, maxlength: 255 },
     dimensions: { type: String, minlength: 2, maxlength: 255 },
     condition: { type: String, minlength: 2, maxlength: 255 },
-    sinopse: { type: String, minlength: 2, maxlength: 255 },
+    sinopse: { type: String, minlength: 2, maxlength: 500 },
     price: { type: String, minlength: 2, maxlength: 255 },
     store: {
       // _id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -69,7 +68,12 @@ const Book = mongoose.model(
     },
     status: {
       code: { type: Number, required: true, default: 0 },
-      message: { type: String, required: true, default: "pending" }
+      message: {
+        type: String,
+        required: true,
+        maxlength: 255,
+        default: "pending..."
+      }
     }
   })
 );
@@ -88,41 +92,68 @@ const Book = mongoose.model(
 const validation_schema = {
   title: Joi.string()
     .min(2)
+    .max(255)
     .required(),
   authors: Joi.array()
     .min(1)
+    .max(50)
     .items(
       Joi.object({
         _id: Joi.string().required(),
-        name: Joi.string().required()
+        name: Joi.string()
+          .max(255)
+          .required()
       })
     )
     .required(),
   genres: Joi.array()
     .min(1)
+    .max(50)
     .items(
       Joi.object({
         _id: Joi.string().required(),
-        title: Joi.string().required()
+        title: Joi.string()
+          .max(255)
+          .required()
       })
     ),
-  language: Joi.string().allow(""),
-  publisher: Joi.string().allow(""),
-  edition: Joi.string().allow(""),
-  year: Joi.number(),
-  coverType: Joi.string().allow(""),
-  pages: Joi.number().allow(""),
-  dimensions: Joi.string().allow(""),
-  condition: Joi.string().allow(""),
-  sinopse: Joi.string().allow(""),
-  price: Joi.number(),
+  language: Joi.string()
+    .max(255)
+    .allow(""),
+  publisher: Joi.string()
+    .max(255)
+    .allow(""),
+  edition: Joi.string()
+    .max(255)
+    .allow(""),
+  year: Joi.number().max(255),
+  coverType: Joi.string()
+    .max(255)
+    .allow(""),
+  pages: Joi.number()
+    .max(255)
+    .allow(""),
+  dimensions: Joi.string()
+    .max(255)
+    .allow(""),
+  condition: Joi.string()
+    .max(255)
+    .allow(""),
+  sinopse: Joi.string()
+    .max(500)
+    .allow(""),
+  price: Joi.number().max(255),
   store: Joi.object({
     _id: Joi.string().required(),
-    name: Joi.string().required()
+    name: Joi.string()
+      .max(255)
+      .required()
   }),
   status: Joi.object({
     code: Joi.number().label("Status Code"),
-    message: Joi.string().label("Status Message")
+    message: Joi.string()
+      .max(255)
+      .label("Status Message")
   }).label("Status")
 };
 
