@@ -5,18 +5,18 @@
     "allow-cross-domain": true
   },
   "database": {
-    "url": "mongodb://localhost/orpheu"
+    "url": "env-var"
   },
   "auth": {
     "require-auth": false,
     "require-admin": false,
-    "jwt-private-key": "1234"
+    "jwt-private-key": "env-var"
   },
   "storage": {
     "enabled": false,
     "endpoint": "fra1.digitaloceanspaces.com",
-    "key": "YAFLRQQHM4AN6UMNUPU7",
-    "secret": "qXPc2FdNZdIH7ppfXU+34VYU87LxpvCjkD7kmipoHe0",
+    "key": "env-var",
+    "secret": "env-var",
     "bucket": "orpheu",
     "content-folder": "content"
   },

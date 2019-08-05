@@ -9,10 +9,10 @@ const winston = require("winston");
 const mongoose = require("mongoose");
 
 module.exports = function() {
-  const dbURL = config.get("database.url");
+  const connectionString = config.get("database.connectionString");
   mongoose
     .set()
-    .connect(dbURL, {
+    .connect(connectionString, {
       useFindAndModify: false,
       useNewUrlParser: true,
       useCreateIndex: true // Temporary fixes for deprecation warnings.

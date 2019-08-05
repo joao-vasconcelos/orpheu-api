@@ -1,6 +1,6 @@
 {
   "database": {
-    "url": "database-url"
+    "connectionString": "mongodb-connectionString"
   },
   "auth": {
     "jwt-private-key": "jwt-private-key"
