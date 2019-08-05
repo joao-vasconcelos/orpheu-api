@@ -1,12 +1,12 @@
 {
   "database": {
-    "connectionString": "database-connectionString"
+    "connection-string": "database_connectionString"
   },
   "auth": {
-    "jwt-private-key": "jwt-private-key"
+    "jwt-private-key": "auth_jwtPrivateKey"
   },
   "storage": {
-    "key": "storage-key",
-    "secret": "storage-secret"
+    "key": "storage_key",
+    "secret": "storage_secret"
   }
 }

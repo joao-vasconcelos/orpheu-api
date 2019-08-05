@@ -1,10 +1,6 @@
 const config = require("config");
-// const fileUpload = require("express-fileupload");
 
 module.exports = function(req, res, next) {
-  // Use fileUpload to automatically parse files to "req.files"
-  // fileUpload({ parseNested: true });
-
   // Parse request if configuration enabled
   if (config.get("communication.parse-request-body-if-multipart")) {
     // Parse request if it is of type "multipart/form-data"

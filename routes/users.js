@@ -7,6 +7,15 @@ const { encryptPassword } = require("../services/encrypt");
 const router = require("express").Router();
 
 /* * */
+/* APAGAR */
+router.get("/", async (req, res) => {
+  const items = await User.find();
+  res.send(items);
+});
+
+/* * */
+
+/* * */
 /* GET method for [/api/users/me/] */
 /* Responds with the currently logged in user */
 router.get("/me", auth, async (req, res) => {

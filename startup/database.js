@@ -9,7 +9,7 @@ const winston = require("winston");
 const mongoose = require("mongoose");
 
 module.exports = function() {
-  const connectionString = config.get("database.connectionString");
+  const connectionString = config.get("database.connection-string");
   mongoose
     .set()
     .connect(connectionString, {
