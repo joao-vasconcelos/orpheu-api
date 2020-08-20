@@ -22,7 +22,7 @@
   "homepage": "https://github.com/joao-vasconcelos/orpheu-api#readme",
   "dependencies": {
     "aws-sdk": "^2.504.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "compression": "^1.7.4",
     "config": "^3.2.2",
     "express": "^4.17.1",
